@@ -1,9 +1,23 @@
 class Player
+  
   def play_turn(warrior)
-
-    @health = warrior.health unless @health
-
-    if 
+    
+    def initialize
+      @health = 20
+      @back_wall = 0
+    end
+    
+    def turn_around(warrior)
+      @back_wall
+    end
+    
+    if need_to_save_captive(warrior)
+      go_save_captive(warrior)
+    else
+      warrior.walk!
+    end
+      
+    def go_save_captive 
       if warrior.feel(:backward).empty?
         warrior.walk!(:backward)
       elsif warrior.feel(:backward).captive?
@@ -11,29 +25,25 @@ class Player
       else warrior.feel(:backward).wall?
         @back_wall
       end
-    
+    end
+   
 
-    if warrior.feel.captive?
-      warrior.rescue!
-    elsif warrior.feel.empty?
+    if warrior.feel.empty?
       if warrior.health < 20 && under_attack?(warrior)
         warrior.walk!:backward
       end
-    else
-      warrior.attack!
     end
 
     @health = warrior.health
 
-  end
+    end
   
+    def need_to_save_captive(warrior)
+      turn_around(warrior)
+    end
   
-  def under_attack?(warrior)
-    @health <= warrior.health
-  end
-  
-  def turn_around
-    @back_wall += 1
-  end
+    def under_attack?(warrior)
+      @health <= warrior.health
+    end
   
 end
