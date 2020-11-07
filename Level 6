@@ -3,19 +3,20 @@ class Player
 
     @health = warrior.health unless @health
 
-    unless warrior.feel(:backward).wall?
-      if warrior.feel.empty?
+    if 
+      if warrior.feel(:backward).empty?
         warrior.walk!(:backward)
       elsif warrior.feel(:backward).captive?
-        warrior.rescue!:backward
+        warrior.rescue!(:backward)
+      else warrior.feel(:backward).wall?
+        @back_wall
       end
-    end
     
 
     if warrior.feel.captive?
       warrior.rescue!
     elsif warrior.feel.empty?
-      if warrior.health < 20 && @health <= warrior.health
+      if warrior.health < 20 && under_attack?(warrior)
         warrior.walk!:backward
       end
     else
@@ -25,4 +26,14 @@ class Player
     @health = warrior.health
 
   end
+  
+  
+  def under_attack?(warrior)
+    @health <= warrior.health
+  end
+  
+  def turn_around
+    @back_wall += 1
+  end
+  
 end
