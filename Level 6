@@ -1,9 +1,10 @@
 class Player
+  def initialize()
+    @health = 20
+    @back_wall = 0
+  end
+  
   def play_turn(warrior)
-
-    @health = warrior.health unless @health
-    @back_wall = 0 unless @back_wall
-    
 
     if @back_wall < 1
       if warrior.feel(:backward).empty?
