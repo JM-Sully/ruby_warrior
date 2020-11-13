@@ -16,35 +16,32 @@ class Player
       end
     
     elsif warrior.feel.empty?
-      if warrior.health > 15
-        warrior.walk!
-      elsif under_attack?(warrior)
-        if warrior.health > 15 
-          warrior.attack!
-        elsif warrior.health < 15 
-          warrior.walk!(:backward)
-        end
-      else
-        warrior.rest!
-      end
- 
-
-      
-    elsif warrior.feel.enemy?
-      warrior.attack!
     
+      if needs_health(warrior)
+        if under_attack?(warrior)
+          warrior.walk!(:backward)
+        else
+          warrior.rest!
+        end
+        
+      else
+        warrior.walk!
+      end
+      
+    else
+      warrior.attack!
     end
-   
-   #else
-      #warrior.attack!
-    #end
 
     @health = warrior.health
   end
   
+  def needs_health(warrior)
+    warrior.health < 15
+  end
   
   def under_attack?(warrior)
     @health <= warrior.health
   end
   
 end
+
