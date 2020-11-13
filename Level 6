@@ -14,19 +14,27 @@ class Player
       else warrior.feel(:backward).wall?
         @back_wall +=1
       end
-  
-    else
-      if warrior.feel.empty?
-        warrior.walk!
-      else
-        warrior.attack!
-      end
-    end
     
-    #elsif warrior.feel.empty?
-      #if warrior.health < 20 && under_attack?(warrior)
-       # warrior.walk!:backward
-      #end
+    elsif warrior.feel.empty?
+      if warrior.health > 15
+        warrior.walk!
+      elsif under_attack?(warrior)
+        if warrior.health > 15 
+          warrior.attack!
+        elsif warrior.health < 15 
+          warrior.walk!(:backward)
+        end
+      else
+        warrior.rest!
+      end
+ 
+
+      
+    elsif warrior.feel.enemy?
+      warrior.attack!
+    
+    end
+   
    #else
       #warrior.attack!
     #end
