@@ -14,16 +14,15 @@ class Player
       else warrior.feel(:backward).wall?
         @back_wall +=1
       end
+
     
     elsif warrior.feel.empty?
-    
-      if needs_rest?(warrior)
-        if under_attack?(warrior)
-          warrior.walk!(:backward)
-        else
-          warrior.rest!
-        end
-        
+      if under_attack?(warrior) && fit_to_fight?(warrior)
+        warrior.walk!
+      elsif need_to_walk_backwards_to_rest?(warrior)
+        warrior.walk!(:backward)
+      elsif needs_a_lot_of_rest?(warrior) 
+        warrior.rest!
       else
         warrior.walk!
       end
@@ -32,12 +31,10 @@ class Player
       warrior.attack!
     end
 
-
-
     @health = warrior.health
   end
   
-  def needs_rest?(warrior)
+  def needs_a_lot_of_rest?(warrior)
     warrior.health < 20
   end
   
@@ -45,4 +42,12 @@ class Player
     @health > warrior.health
   end
   
+  def need_to_walk_backwards_to_rest?(warrior)
+    under_attack?(warrior) && warrior.health < 7
+  end
+  
+  def fit_to_fight?(warrior)
+    warrior.health > 10
+  end
+
 end
