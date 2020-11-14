@@ -17,7 +17,7 @@ class Player
     
     elsif warrior.feel.empty?
     
-      if needs_health(warrior)
+      if needs_rest?(warrior)
         if under_attack?(warrior)
           warrior.walk!(:backward)
         else
@@ -32,16 +32,17 @@ class Player
       warrior.attack!
     end
 
+
+
     @health = warrior.health
   end
   
-  def needs_health(warrior)
-    warrior.health < 15
+  def needs_rest?(warrior)
+    warrior.health < 20
   end
   
   def under_attack?(warrior)
-    @health <= warrior.health
+    @health > warrior.health
   end
   
 end
-
