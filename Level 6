@@ -47,7 +47,7 @@ class Player
   end
   
   def fit_to_fight?(warrior)
-    warrior.health > 10
+    warrior.health > 9
   end
 
 end
