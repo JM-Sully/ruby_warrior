@@ -30,7 +30,6 @@ class Player
   
   def check_for_enemy?(warrior)
     warrior.look.any? { |space| space.enemy? }
-      @enemy = true
   end
 
 end
