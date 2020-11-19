@@ -1,0 +1,36 @@
+class Player
+  
+  def initialize 
+    @captive = 0
+  end
+
+  def play_turn(warrior)
+    
+    if there_are_captives(warrior)
+      save_captive(warrior)
+    else
+     warrior.walk!
+   end
+  
+  def there_are_captives(warrior)
+    @captive < 1
+  end
+  
+  def save_captive(warrior)
+    if warrior.feel.empty?
+      warrior.walk!
+    else
+      warrior.rescue!
+      @captive += 1
+    end
+  end
+  
+  
+  def check_for_enemy(warrior)
+    warrior.look.any? { |space| space.enemy? }
+      @enemy = true
+  end
+    
+  end
+  
+end
