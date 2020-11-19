@@ -1,14 +1,9 @@
 class Player
-  
-  def initialize 
-    @captive = 0
-  end
 
   def play_turn(warrior)
-    
     if there_are_captives(warrior)
-      save_captive(warrior)
-    elsif check_for_enemy?(warrior)
+      save_captives(warrior)
+    elsif there_are_enemies?(warrior)
       warrior.shoot!
     else
       warrior.walk!
@@ -16,19 +11,18 @@ class Player
   end
 
   def there_are_captives(warrior)
-    @captive < 1
+    warrior.look.any? { |space| space.captive? }
   end 
   
-  def save_captive(warrior)
+  def save_captives(warrior)
     if warrior.feel.empty?
       warrior.walk!
     else
       warrior.rescue!
-      @captive += 1
     end
   end
   
-  def check_for_enemy?(warrior)
+  def there_are_enemies?(warrior)
     warrior.look.any? { |space| space.enemy? }
   end
 
