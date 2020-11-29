@@ -1,0 +1,35 @@
+class Player
+  def initialize()
+    @health = 20
+    @back_wall = 0
+  end
+  
+  def play_turn(warrior)
+
+    if warrior.feel.empty?
+      warrior.walk!
+    elsif warrior.feel.enemy?
+      warrior.attack!
+    else there_are_enemies?(warrior)
+        warrior.shoot!
+    end
+
+    @health = warrior.health
+  end
+  
+  def needs_a_lot_of_rest?(warrior)
+    warrior.health < 20
+  end
+  
+  def under_attack?(warrior)
+    @health > warrior.health
+  end
+  
+  def need_to_walk_backwards_to_rest?(warrior)
+    under_attack?(warrior) && warrior.health < 7
+  end
+  
+  def fit_to_fight?(warrior)
+    warrior.health > 9
+  end
+  
